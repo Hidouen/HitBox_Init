@@ -60,11 +60,11 @@ init() {
     fi
 
     # Créer les dossiers nécessaires
-    mkdir -p Config/{nginx,backend,frontend,postgres}
-    mkdir -p Backend
-    mkdir -p Frontend
-    mkdir -p Database/{scripts}
-    mkdir -p Documentation
+    mkdir -p config/{nginx,backend,frontend,postgres}
+    mkdir -p backend
+    mkdir -p frontend
+    mkdir -p database/scripts
+    mkdir -p documentation
 
     print_success "Structure des dossiers créée"
 }
@@ -80,7 +80,7 @@ start() {
     if docker compose up -d; then
         # Attendre que les conteneurs soient prêts
         print_message "Attente du démarrage des conteneurs..."
-        sleep 5
+        sleep 10
         
         # Vérifier l'état des conteneurs
         local all_healthy=true
@@ -145,6 +145,14 @@ db() {
     fi
 }
 
+# Fonction pour accéder au shell de nginx
+db() {
+    print_message "Accès au shell de nginx..."
+    if check_container "hitbox_nginx"; then
+        docker exec -it hitbox_nginx sh
+    fi
+}
+
 # Fonction pour afficher les crédits
 credits() {
     echo -e "${RED}À${NC} ${YELLOW}l${GREEN}a${NC} ${RED}r${NC}${YELLOW}é${NC}${GREEN}a${NC}${BLUE}l${NC}${MAGENTA}i${NC}${CYAN}s${NC}${RED}a${NC}${YELLOW}t${NC}${GREEN}i${NC}${BLUE}o${NC}${MAGENTA}n${NC} ${YELLOW}:${NC} ${RED}c${NC}${YELLOW}'${NC}${GREEN}e${NC}${BLUE}s${NC}${MAGENTA}t${NC} ${RED}H${NC}${YELLOW}i${NC}${GREEN}d${NC}${BLUE}o${NC}${MAGENTA}u${NC}${CYAN}e${NC}${RED}n${NC} ${RED}&${NC} ${RED}C${NC}${YELLOW}'${NC}${GREEN}e${NC}${BLUE}s${NC}${MAGENTA}t${RED}L${NC}${YELLOW}'${NC}${GREEN}i${NC}${BLUE}a${NC}"    
@@ -205,9 +213,9 @@ help() {
     echo "  logs:nginx    - Affiche les logs du nginx"
     echo "  backend       - Accès au shell du conteneur PHP"
     echo "  frontend      - Accès au shell du conteneur Frontend"
-    echo "  db           - Accès au shell PostgreSQL"
+    echo "  db            - Accès au shell PostgreSQL"
     echo "  credits       - Affiche les crédits"
-    echo "  help         - Affiche cette aide"
+    echo "  help          - Affiche cette aide"
 }
 
 # Vérifier que Docker est en cours d'exécution

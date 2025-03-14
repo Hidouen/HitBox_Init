@@ -1,4 +1,4 @@
-# Environment
+# environment
 .env
 .env.local
 .env.*.local
@@ -7,24 +7,24 @@
 .idea/
 .vscode/
 
-# Backend
-Backend/vendor/
-Backend/var/
-Backend/.env
-Backend/.env.local
-Backend/.env.*.local
+# backend
+backend/vendor/
+backend/var/
+backend/.env
+backend/.env.local
+backend/.env.*.local
 
-# Frontend
-Frontend/node_modules/
-Frontend/.env
-Frontend/.env.local
-Frontend/.env.*.local
-Frontend/dist/
-Frontend/.nuxt/
-Frontend/.output/
+# frontend
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+frontend/dist/
+frontend/.nuxt/
+frontend/.output/
 
-# Database
-Database/data/
+# database
+database/data/
 
 # Logs
 *.log

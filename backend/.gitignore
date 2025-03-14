@@ -1,0 +1,54 @@
+
+###> symfony/framework-bundle ###
+.env
+.env.dev
+.env.test
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/var/cache/*
+/var/log/*
+/var/sessions/*
+/var/tmp/*
+!var/cache/.gitignore
+!var/log/.gitignore
+!var/sessions/.gitignore
+/vendor/
+###< symfony/framework-bundle ###
+
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+### IDE / OS ###
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+### JWT (si tu utilises lexik/jwt-authentication-bundle) ###
+/config/jwt/private.pem
+/config/jwt/public.pem
+/config/jwt/passphrase
+
+### Symfony Security (session & cache) ###
+/symfony.lock
+
+### API Platform (si utilisé) ###
+/api
+/.api_platform/

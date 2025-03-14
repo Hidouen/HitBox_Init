@@ -88,13 +88,17 @@ Before you begin, make sure you have the following installed:
     composer require symfony/orm-pack
     composer require --dev symfony/maker-bundle
     composer require symfony/runtime
-    composer require symfony/apache-pack
     composer require symfony/validator
     composer require symfony/serializer
     composer require symfony/security-bundle
     composer require lexik/jwt-authentication-bundle
     composer require nelmio/cors-bundle
-    composer require --dev symfony/test-pack
+    composer require friendsofsymfony/rest-bundle
+    composer require gesdinet/jwt-refresh-token-bundle
+    composer require doctrine/doctrine-migrations-bundle
+    composer require symfony/debug-bundle
+    composer require symfony/password-hasher
+
 
     # Set proper permissions
     chown -R www-data:www-data var

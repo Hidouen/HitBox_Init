@@ -1,0 +1,84 @@
+services:
+  nginx:
+    container_name: hitbox_nginx
+    build:
+      context: ./Config/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "${NGINX_PORT_HTTP}:80"
+      - "${NGINX_PORT_HTTPS}:443"
+    volumes:
+      - ./Config/nginx:/etc/nginx/conf.d
+    depends_on:
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
+    networks:
+      - hitbox-network
+    restart: unless-stopped
+
+  backend:
+    container_name: hitbox_backend
+    build:
+      context: ./Config/backend
+      dockerfile: Dockerfile
+    ports:
+      - "${BACKEND_PORT}:9000"
+      - "9003:9003"  # Port Xdebug
+    volumes:
+      - ./Backend:/var/www/html
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_DEBUG=${APP_DEBUG}
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?serverVersion=17.4&charset=utf8
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - hitbox-network
+    restart: unless-stopped
+
+  frontend:
+    container_name: hitbox_frontend
+    build:
+      context: ./Config/frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    ports:
+      - "${FRONTEND_PORT}:3000"
+    networks:
+      - hitbox-network
+    restart: unless-stopped
+
+  postgres:
+    container_name: hitbox_postgres
+    image: postgres:17.4-alpine
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./Database/scripts:/docker-entrypoint-initdb.d
+      - postgres_backups:/backups
+    networks:
+      - hitbox-network
+    restart: unless-stopped
+
+networks:
+  hitbox-network:
+    name: hitbox_network
+    driver: bridge
+
+volumes:
+  postgres_data:
+    name: hitbox_postgres_data
+  postgres_backups:
+    name: hitbox_postgres_backups

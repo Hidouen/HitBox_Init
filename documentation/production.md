@@ -1,34 +1,33 @@
-# 🚀 Production Guide
+# 🚀 Production guide
 
-## 🛠️ Recommended Tools and Configurations
+## 🛠️ Recommended tools and configurations
 
 ### 1. Infrastructure
 
-#### Cloud Provider
-- **Primary**: AWS
-  - EC2 for application servers
-  - RDS for PostgreSQL
-  - CloudFront for CDN
-  - Route 53 for DNS
-  - ACM for SSL certificates
+#### Cloud provider
+- **Primary**: OVH
+  - OVHcloud for application servers
+  - Pigsty for PostgreSQL
+  - Cloudflare for CDN and DNS
+  - EV for SSL certificates
 
-#### Server Configuration
+#### Server configuration
 - Ubuntu 24.04 LTS
 - 4 vCPUs minimum
 - 8GB RAM minimum
 - 100GB SSD storage
 - Dedicated load balancer
 
-### 2. Monitoring Stack
+### 2. Monitoring stack
 
-#### Application Monitoring
+#### Application monitoring
 - **New Relic**
   - Application performance monitoring
   - Error tracking
   - Custom dashboards
   - Alerting system
 
-#### Log Management
+#### Log management
 - **ELK Stack**
   ```yaml
   # Logstash configuration
@@ -56,7 +55,7 @@
   - Custom alerts
   - Visual dashboards
 
-### 3. Security Measures
+### 3. Security measures
 
 #### SSL/TLS
 - Let's Encrypt with auto-renewal
@@ -83,7 +82,7 @@ ssl_session_tickets off;
   ufw enable
   ```
 
-#### Security Headers
+#### Security headers
 ```nginx
 add_header X-Frame-Options "SAMEORIGIN";
 add_header X-XSS-Protection "1; mode=block";
@@ -92,9 +91,9 @@ add_header Referrer-Policy "strict-origin-when-cross-origin";
 add_header Content-Security-Policy "default-src 'self';";
 ```
 
-### 4. Performance Optimization
+### 4. Performance optimization
 
-#### Caching Strategy
+#### Caching strategy
 - **Redis Cache**
   ```yaml
   redis:
@@ -105,7 +104,7 @@ add_header Content-Security-Policy "default-src 'self';";
     ttl: 3600
   ```
 
-#### CDN Configuration
+#### CDN configuration
 ```nginx
 # CloudFront configuration
 location /assets/ {
@@ -116,7 +115,7 @@ location /assets/ {
 }
 ```
 
-#### Database Optimization
+#### Database optimization
 ```postgresql
 # postgresql.conf optimizations
 max_connections = 200
@@ -133,30 +132,23 @@ min_wal_size = 1GB
 max_wal_size = 4GB
 ```
 
-### 5. Backup Strategy
+### 5. Backup strategy
 
-#### Database Backups
+#### Database backups
 - Daily full backups
 - Hourly WAL archiving
 - 30-day retention
 - Off-site storage
 
-```bash
-#!/bin/bash
-# backup.sh
-pg_dump -Fc -f backup-$(date +%Y%m%d).dump
-aws s3 cp backup-$(date +%Y%m%d).dump s3://hitbox-backups/
-```
-
-#### Application Backups
+#### Application backups
 - Configuration files
 - User uploads
 - SSL certificates
 - Logs archive
 
-### 6. Deployment Pipeline
+### 6. Deployment pipeline
 
-#### CI/CD Configuration
+#### CI/CD configuration (check DinD)
 ```yaml
 # GitLab CI configuration
 stages:
@@ -173,41 +165,29 @@ production:
     - main
 ```
 
-#### Blue-Green Deployment
-```bash
-#!/bin/bash
-# deploy.sh
-docker compose -f docker-compose.prod.blue.yml up -d
-sleep 30
-if health_check; then
-    switch_traffic blue
-    docker compose -f docker-compose.prod.green.yml down
-fi
-```
+### 7. Scaling strategy
 
-### 7. Scaling Strategy
-
-#### Horizontal Scaling
+#### Horizontal scaling
 - Auto-scaling groups
 - Load balancer configuration
 - Session management
 - Database replication
 
-#### Vertical Scaling
+#### Vertical scaling
 - Resource monitoring
 - Performance metrics
 - Upgrade paths
 - Capacity planning
 
-### 8. Maintenance Procedures
+### 8. Maintenance procedures
 
-#### Regular Maintenance
+#### Regular maintenance
 - Security updates
 - Performance optimization
 - Log rotation
 - Database vacuum
 
-#### Emergency Procedures
+#### Emergency procedures
 - Incident response plan
 - Rollback procedures
 - Communication templates
@@ -215,7 +195,7 @@ fi
 
 ### 9. Documentation
 
-#### Required Documentation
+#### Required documentation
 - Architecture diagrams
 - Network topology
 - Security procedures

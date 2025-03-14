@@ -38,6 +38,7 @@ HitBox is a web application designed for game enthusiasts to organize and share 
 
 ### Frontend
 - **Vue.js 3**
+- **TailwindCSS**
 - **TypeScript**
 - **Pinia** (state management)
 - **Vue Router**
@@ -208,8 +209,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 👥 Authors
 
-- **Celia** - *Conception, development, and deployment - Frontend artist* - [Celia](https://github.com/cetrl)
-- **Hidouen** - *Conception, development, and deployment - Backend optimizer* - [Hidouen](https://github.com/hidouen)
+- [Celia](https://github.com/cetrl) - *Conception, development, and deployment - Frontend artist*
+- [Hidouen](https://github.com/hidouen) - *Conception, development, and deployment - Backend optimizer*
 
 ## 🙏 Acknowledgments
 

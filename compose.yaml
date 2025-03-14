@@ -2,13 +2,13 @@ services:
   nginx:
     container_name: hitbox_nginx
     build:
-      context: ./Config/nginx
+      context: ./config/nginx
       dockerfile: Dockerfile
     ports:
       - "${NGINX_PORT_HTTP}:80"
       - "${NGINX_PORT_HTTPS}:443"
     volumes:
-      - ./Config/nginx:/etc/nginx/conf.d
+      - ./config/nginx:/etc/nginx/conf.d
     depends_on:
       backend:
         condition: service_healthy
@@ -27,13 +27,13 @@ services:
   backend:
     container_name: hitbox_backend
     build:
-      context: ./Config/backend
+      context: ./config/backend
       dockerfile: Dockerfile
     ports:
       - "${BACKEND_PORT}:9000"
       - "9003:9003"  # Port Xdebug
     volumes:
-      - ./Backend:/var/www/html
+      - ./backend:/var/www/html
     environment:
       - APP_ENV=${APP_ENV}
       - APP_DEBUG=${APP_DEBUG}
@@ -53,10 +53,10 @@ services:
   frontend:
     container_name: hitbox_frontend
     build:
-      context: ./Config/frontend
+      context: ./config/frontend
       dockerfile: Dockerfile
     volumes:
-      - ./Frontend:/app
+      - ./frontend:/app
     environment:
       - NODE_ENV=${NODE_ENV}
     ports:
@@ -82,7 +82,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./Database/scripts:/docker-entrypoint-initdb.d
+      - ./database/scripts:/docker-entrypoint-initdb.d
       - postgres_backups:/backups
     networks:
       - hitbox-network

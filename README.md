@@ -1,8 +1,8 @@
-# 🎮 **HitBox - Game Collection Manager**
+# 🎮 HitBox - Game Collection Manager
 
-HitBox is a modern web application designed for gamers to organize and share their game collections. With its seamless integration of Symfony 7 and Vue.js 3, HitBox provides a streamlined experience for managing your gaming library.
+HitBox is a web application designed for game enthusiasts to organize and share their game collections (playlists). With its integration of Symfony 7 and Vue.js 3, HitBox provides a smooth experience for managing your gaming library.
 
-## 📑 **Table of Contents**
+## 📑 Table of Contents
 
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
@@ -18,45 +18,45 @@ HitBox is a modern web application designed for gamers to organize and share the
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgments)
 
-## 🌟 **Features**
+## 🌟 Features
 
-- **Game Collection Management**: Create and organize your personal game playlists.
-- **User Profiles**: Set up and manage your unique gamer profile.
-- **Game Ratings**: Rate and leave reviews for your games.
-- **Social Features**: Share your playlists with the community.
+- **Game collection management**: Create and organize your personal game playlists.
+- **Playlist sharing**: Share your playlists with the community.
+- **Game reviews**: Note and review your games.
+- **User profiles**: Set up and manage your profile.
 - **Modern UI**: Clean and responsive design for a smooth user experience.
-- **API-First Architecture**: A RESTful API ensuring seamless communication between frontend and backend.
+- **API-First architecture**: A RESTful API ensuring seamless communication between frontend and backend.
 
-## 🛠️ **Tech Stack**
+## 🛠️ Tech stack
 
-### **Backend**
-- **PHP 8.4**
+### Backend
 - **Symfony 7.2**
+- **PHP 8.4**
 - **PostgreSQL 17.4**
 - **PHP-FPM**
 - **Nginx**
 
-### **Frontend**
+### Frontend
 - **Vue.js 3**
 - **TypeScript**
-- **Pinia** (State Management)
+- **Pinia** (state management)
 - **Vue Router**
-- **Vitest** (Testing)
+- **Vitest** (testing)
 
-### **Development Tools**
+### Development tools
 - **Docker & Docker Compose** (for containerization)
-- **npm** (Package Manager)
-- **ESLint & Prettier** (for code quality)
-- **Git** (Version control)
+- **npm** (package manager)
+- **Vite** (front build)
+- **Git** (version control)
 
-## 🚀 **Getting Started**
+## 🚀 Getting started
 
 ### **Prerequisites**
 Before you begin, make sure you have the following installed:
 - **Docker** and **Docker Compose**.
 - **Git**.
 
-### **Installation**
+### Installation
 
 1. Clone the repository:
     ```bash
@@ -123,7 +123,7 @@ Before you begin, make sure you have the following installed:
     - Backend API: [http://localhost:8080/api](http://localhost:8080/api)
     - Nginx: [http://localhost:8080](http://localhost:8080) or [https://localhost:8443](https://localhost:8443)
 
-### **Development Commands**
+### Development commands
 
 The project includes a convenient script (`dev.sh`) with the following commands to help you during development:
 
@@ -137,27 +137,27 @@ The project includes a convenient script (`dev.sh`) with the following commands 
 ./dev.sh db       # Access the PostgreSQL shell
 ```
 
-## 📁 **Project Structure**
+## 📁 Project structure
 
 The project's directory structure is as follows:
 
 ```
 hitbox/
-├── Backend/           # Symfony backend application
-├── Frontend/          # Vue.js frontend application
-├── Config/            # Configuration files for Docker
+├── backend/           # Symfony backend application
+├── frontend/          # Vue.js frontend application
+├── config/            # Configuration files for Docker
 │   ├── nginx/         # Nginx configuration
 │   ├── backend/       # Backend container configuration
 │   ├── frontend/      # Frontend container configuration
 │   └── postgres/      # PostgreSQL container configuration
-├── Database/          # Database-related files
+├── database/          # Database-related files
 │   └── scripts/       # SQL initialization scripts
-└── Documentation/     # Project-related documentation
+└── documentation/     # Project-related documentation
 ```
 
-## 🔧 **Configuration**
+## 🔧 Configuration
 
-### **Backend Configuration**
+### Backend configuration
 After installing Symfony, you need to configure your `.env` file in the Backend directory:
 
 ```env
@@ -168,7 +168,7 @@ APP_SECRET=your_secret_here
 CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
 ```
 
-### **Frontend Configuration**
+### Frontend configuration
 Create environment files for the frontend:
 
 ```env
@@ -176,28 +176,23 @@ Create environment files for the frontend:
 VITE_API_URL=http://localhost:8080/api
 ```
 
-```env
-# Frontend/.env.development
-VITE_API_URL=http://localhost:8080/api
-```
+## 🧪 Testing
 
-## 🧪 **Testing**
-
-### **Backend Tests**
+### Backend tests
 To run the backend tests, first access the backend container, then run PHPUnit:
 ```bash
 ./dev.sh backend
 php bin/phpunit
 ```
 
-### **Frontend Tests**
+### Frontend tests
 To run the frontend tests, first access the frontend container, then use Vitest:
 ```bash
 ./dev.sh frontend
 npm test
 ```
 
-## 📝 **Contributing**
+## 📝 Contributing
 
 We welcome contributions! Please follow these steps to contribute:
 
@@ -207,16 +202,16 @@ We welcome contributions! Please follow these steps to contribute:
 4. Push to your branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request for review
 
-## 📄 **License**
+## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-## 👥 **Authors**
+## 👥 Authors
 
-- **C'estL'ia** - *Conception, development, and deployment - Frontend artist* - [C'estL'ia](https://github.com/cetrl)
+- **Celia** - *Conception, development, and deployment - Frontend artist* - [Celia](https://github.com/cetrl)
 - **Hidouen** - *Conception, development, and deployment - Backend optimizer* - [Hidouen](https://github.com/hidouen)
 
-## 🙏 **Acknowledgments**
+## 🙏 Acknowledgments
 
 - **Symfony** team for the incredible framework.
 - **Vue.js** team for providing a modern, reactive frontend framework.

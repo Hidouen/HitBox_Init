@@ -1,10 +1,10 @@
-# 🔧 HitBox Troubleshooting Guide
+# 🔧 HitBox troubleshooting guide
 
-## 🚨 Common Issues and Solutions
+## 🚨 Common issues and solutions
 
-### Docker Related Issues
+### Docker related issues
 
-#### Containers Won't Start
+#### Containers won't start
 ```bash
 Error: Ports are already in use
 ```
@@ -19,7 +19,7 @@ Error: Ports are already in use
    sudo kill <PID>
    ```
 
-#### Permission Issues
+#### Permission issues
 ```bash
 Error: Permission denied
 ```
@@ -33,9 +33,9 @@ Error: Permission denied
    chmod +x dev.sh
    ```
 
-### Backend Issues
+### Backend issues
 
-#### PHP-FPM Connection Refused
+#### PHP-FPM connection refused
 ```bash
 ERROR: connect() to hitbox_backend:9000 failed
 ```
@@ -49,7 +49,7 @@ ERROR: connect() to hitbox_backend:9000 failed
    docker compose restart hitbox_backend
    ```
 
-#### Symfony Cache Issues
+#### Symfony cache issues
 **Solution:**
 ```bash
 ./dev.sh backend
@@ -57,9 +57,9 @@ php bin/console cache:clear
 php bin/console cache:warmup
 ```
 
-### Frontend Issues
+### Frontend issues
 
-#### Node Modules Issues
+#### Node modules issues
 ```bash
 Error: Cannot find module
 ```
@@ -67,21 +67,21 @@ Error: Cannot find module
 ```bash
 ./dev.sh frontend
 rm -rf node_modules
-pnpm install
+npm install
 ```
 
-#### Build Errors
+#### Build errors
 **Solution:**
 1. Clear cache:
    ```bash
    ./dev.sh frontend
    rm -rf .nuxt
-   pnpm dev
+   npm dev
    ```
 
-### Database Issues
+### Database issues
 
-#### Connection Failed
+#### Connection failed
 ```bash
 Error: Connection refused
 ```
@@ -95,7 +95,7 @@ Error: Connection refused
    cat .env | grep POSTGRES
    ```
 
-#### Migration Errors
+#### Migration errors
 **Solution:**
 ```bash
 ./dev.sh backend
@@ -104,9 +104,9 @@ php bin/console doctrine:migrations:sync-metadata-storage
 php bin/console doctrine:migrations:migrate
 ```
 
-## 🔍 Diagnostic Commands
+## 🔍 Diagnostic commands
 
-### System Status
+### System status
 ```bash
 # Check all containers
 docker compose ps
@@ -118,7 +118,7 @@ docker compose logs
 docker network ls
 ```
 
-### Resource Usage
+### Resource usage
 ```bash
 # Container stats
 docker stats
@@ -127,7 +127,7 @@ docker stats
 docker system df
 ```
 
-### Database Checks
+### Database checks
 ```bash
 # Connect to database
 ./dev.sh db
@@ -139,9 +139,9 @@ docker system df
 SELECT * FROM pg_stat_activity;
 ```
 
-## 🚑 Emergency Procedures
+## 🚑 Emergency procedures
 
-### Complete Reset
+### Complete reset
 ```bash
 # Stop all containers
 ./dev.sh stop
@@ -157,7 +157,7 @@ docker system prune -a
 ./dev.sh start
 ```
 
-### Data Recovery
+### Data recovery
 ```bash
 # Backup database
 docker compose exec -T hitbox_db pg_dump -U hitbox > backup.sql
@@ -166,20 +166,9 @@ docker compose exec -T hitbox_db pg_dump -U hitbox > backup.sql
 cat backup.sql | docker compose exec -T hitbox_db psql -U hitbox
 ```
 
-## 📞 Support Channels
+## 🔄 Update procedures
 
-1. **Development Team**
-   - Internal Discord: #hitbox-support
-   - Email: dev@hitbox.com
-
-2. **External Resources**
-   - Symfony Documentation
-   - Vue.js Discord
-   - Docker Forums
-
-## 🔄 Update Procedures
-
-### Safe Update Process
+### Safe update process
 1. Backup data
 2. Pull latest changes
 3. Update dependencies
@@ -196,13 +185,13 @@ php bin/console cache:clear
 
 # Frontend update
 ./dev.sh frontend
-pnpm update
-pnpm build
+npm update
+npm build
 ```
 
-## Docker Cleanup Commands
+## Docker cleanup commands
 
-### Docker Prune Commands
+### Docker prune commands
 ```bash
 # Remove all unused containers, networks, images and volumes
 docker system prune -a --volumes
@@ -223,7 +212,7 @@ docker volume prune
 docker system prune -a --volumes --filter "until=24h"
 ```
 
-### Specific Docker Commands
+### Specific docker commands
 ```bash
 # List all containers (running and stopped)
 docker ps -a
@@ -238,7 +227,7 @@ docker rm $(docker ps -aq)
 docker rmi $(docker images -q)
 ```
 
-### Docker Compose Commands
+### Docker compose commands
 ```bash
 # Stop and remove containers, networks
 docker compose down
@@ -250,9 +239,9 @@ docker compose down -v
 docker compose down --remove-orphans
 ```
 
-## Git Cleanup Commands
+## Git cleanup commands
 
-### Git Prune Commands
+### Git prune commands
 ```bash
 # Prune remote-tracking branches no longer on remote
 git remote prune origin
@@ -267,47 +256,10 @@ git branch --merged | grep -v "main\|dev" | xargs git branch -d
 git clean -fd
 ```
 
-### Git Cache Commands
+### Git cache commands
 ```bash
 # Clear git cache
 git rm -r --cached .
 git add .
 git commit -m "chore: clear git cache"
 ```
-
-## Common Issues
-
-### Docker Issues
-1. **Container won't start**
-   ```bash
-   # Check logs
-   docker logs [container_name]
-   
-   # Verify ports
-   docker compose ps
-   ```
-
-2. **Volume permissions**
-   ```bash
-   # Fix permissions
-   sudo chown -R $USER:$USER .
-   ```
-
-### Git Issues
-1. **Large files rejected**
-   ```bash
-   # Reset last commit
-   git reset --soft HEAD~1
-   
-   # Clean git cache
-   git rm -r --cached .
-   ```
-
-2. **Branch conflicts**
-   ```bash
-   # Abort merge
-   git merge --abort
-   
-   # Reset to origin
-   git reset --hard origin/[branch_name]
-   ```

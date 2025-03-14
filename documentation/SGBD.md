@@ -1,8 +1,8 @@
-# 🗄️ PostgreSQL Connection Guide
+# 🗄️ PostgreSQL connection guide
 
-## 📊 Database Connection Information
+## 📊 Database connection information
 
-### Connection Details
+### Connection details
 ```
 Host: localhost
 Port: 5433
@@ -11,13 +11,13 @@ Username: [from .env file]
 Password: [from .env file]
 ```
 
-## 🔧 DBeaver Setup
+## 🔧 DBeaver setup
 
 1. **Install DBeaver**
    - Download from [dbeaver.io](https://dbeaver.io)
    - Install for your operating system
 
-2. **Create New Connection**
+2. **Create new connection**
    - Click "New Database Connection"
    - Select "PostgreSQL"
    - Enter connection details:
@@ -29,26 +29,26 @@ Password: [from .env file]
      Password: [from .env]
      ```
 
-3. **SSL Configuration**
+3. **SSL configuration**
    - Tab: "SSL"
    - Mode: "Require"
    - Select SSL certificates if using production environment
 
-4. **Driver Properties**
+4. **Driver properties**
    - Tab: "Driver properties"
    - Set `allowEncodingChanges` to `true`
 
-5. **Test Connection**
+5. **Test connection**
    - Click "Test Connection"
    - Should show "Connected"
 
-## 🔧 pgAdmin Setup
+## 🔧 pgAdmin setup
 
 1. **Install pgAdmin**
    - Download from [pgadmin.org](https://www.pgadmin.org)
    - Follow installation instructions
 
-2. **Add New Server**
+2. **Add new server**
    - Right-click "Servers"
    - Select "Create" > "Server"
    - General Tab:
@@ -64,32 +64,32 @@ Password: [from .env file]
      Password: [from .env]
      ```
 
-3. **SSL Configuration**
+3. **SSL configuration**
    - SSL Tab:
      - SSL Mode: Require (production)
      - Root Certificate: [path to cert]
 
-4. **Advanced Options**
+4. **Advanced options**
    - Advanced Tab:
      ```
      DB Restriction: hitbox
      ```
 
-## 🔍 Useful Queries
+## 🔍 Useful queries
 
-### Check Connection
+### Check connection
 ```sql
 SELECT version();
 ```
 
-### List Tables
+### List tables
 ```sql
 SELECT table_name 
 FROM information_schema.tables 
 WHERE table_schema = 'public';
 ```
 
-### Check Table Sizes
+### Check table sizes
 ```sql
 SELECT 
     relname as table_name,
@@ -98,14 +98,14 @@ FROM pg_catalog.pg_statio_user_tables
 ORDER BY pg_total_relation_size(relid) DESC;
 ```
 
-## 🔒 Security Best Practices
+## 🔒 Security best practices
 
-1. **Connection Security**
+1. **Connection security**
    - Never save passwords in tool configurations
    - Use environment variables
    - Enable SSL in production
 
-2. **Access Control**
+2. **Access control**
    - Use read-only user for queries
    - Separate users for different environments
    - Regular password rotation
@@ -115,24 +115,24 @@ ORDER BY pg_total_relation_size(relid) DESC;
    - Monitor connection count
    - Track long-running queries
 
-## 🚀 Performance Tips
+## 🚀 Performance tips
 
-1. **Connection Pooling**
+1. **Connection pooling**
    - Enable connection pooling
    - Set appropriate pool size
    - Monitor pool usage
 
-2. **Query Optimization**
+2. **Query optimization**
    - Use EXPLAIN ANALYZE
    - Create necessary indexes
    - Regular VACUUM and ANALYZE
 
-3. **Tool Settings**
+3. **Tool settings**
    - Limit result sets
    - Use query timeout
    - Enable auto-commit
 
-## 🔄 Backup and Restore
+## 🔄 Backup and restore
 
 ### Using DBeaver
 1. Right-click database
@@ -150,7 +150,7 @@ ORDER BY pg_total_relation_size(relid) DESC;
    - Compression Ratio: 9
    - Encoding: UTF-8
 
-### Command Line
+### Command line
 ```bash
 # Backup
 ./dev.sh db
@@ -161,12 +161,12 @@ pg_dump -U hitbox > backup.sql
 psql -U hitbox < backup.sql
 ```
 
-## 📚 Useful Resources
+## 📚 Useful resources
 
 1. **Documentation**
-   - [PostgreSQL Official Docs](https://www.postgresql.org/docs/)
-   - [DBeaver Documentation](https://dbeaver.com/docs/wiki/)
-   - [pgAdmin Documentation](https://www.pgadmin.org/docs/)
+   - [PostgreSQL official docs](https://www.postgresql.org/docs/)
+   - [DBeaver documentation](https://dbeaver.com/docs/wiki/)
+   - [pgAdmin documentation](https://www.pgadmin.org/docs/)
 
 2. **Tools**
    - [pgFormatter](https://github.com/darold/pgFormatter)

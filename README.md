@@ -1,4 +1,3 @@
-
 # 🎮 **HitBox - Game Collection Manager**
 
 HitBox is a modern web application designed for gamers to organize and share their game collections. With its seamless integration of Symfony 7 and Vue.js 3, HitBox provides a streamlined experience for managing your gaming library.
@@ -46,7 +45,7 @@ HitBox is a modern web application designed for gamers to organize and share the
 
 ### **Development Tools**
 - **Docker & Docker Compose** (for containerization)
-- **PNPM** (Package Manager)
+- **npm** (Package Manager)
 - **ESLint & Prettier** (for code quality)
 - **Git** (Version control)
 
@@ -76,10 +75,53 @@ Before you begin, make sure you have the following installed:
     ./dev.sh start
     ```
 
-4. Access the application locally:
+4. Initialize the Symfony backend project:
+    ```bash
+    # Access the backend container
+    ./dev.sh backend
+
+    # Create new Symfony project
+    composer create-project symfony/skeleton:"7.2.*" .
+
+    # Install additional packages as needed
+    composer require symfony/orm-pack
+    composer require --dev symfony/maker-bundle
+    composer require symfony/runtime
+    composer require symfony/apache-pack
+    composer require symfony/validator
+    composer require symfony/serializer
+    composer require symfony/security-bundle
+    composer require lexik/jwt-authentication-bundle
+    composer require nelmio/cors-bundle
+    composer require --dev symfony/test-pack
+
+    # Set proper permissions
+    chown -R www-data:www-data var
+    chmod -R 777 var
+
+    # Exit the container
+    exit
+    ```
+
+5. Initialize the Vue.js frontend project:
+    ```bash
+    # Access the frontend container
+    ./dev.sh frontend
+
+    # Create a new Vue project with recommended settings
+    npm create vue@latest .
+
+    # Install dependencies
+    npm install
+
+    # Start the development server
+    npm run dev -- --host --port 3000
+    ```
+
+5. Access the application locally:
     - Frontend: [http://localhost:3000](http://localhost:3000)
-    - Backend API: [http://localhost:9000](http://localhost:9000)
-    - Nginx Gateway: [http://localhost:80](http://localhost:80)
+    - Backend API: [http://localhost:8080/api](http://localhost:8080/api)
+    - Nginx: [http://localhost:8080](http://localhost:8080) or [https://localhost:8443](https://localhost:8443)
 
 ### **Development Commands**
 
@@ -115,7 +157,29 @@ hitbox/
 
 ## 🔧 **Configuration**
 
-This project uses environment variables for configuration. A `.env.example` file is included as a template. After running the `./dev.sh init` command, create your `.env` file from the example provided.
+### **Backend Configuration**
+After installing Symfony, you need to configure your `.env` file in the Backend directory:
+
+```env
+# Backend/.env
+DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?serverVersion=17.4&charset=utf8"
+APP_ENV=dev
+APP_SECRET=your_secret_here
+CORS_ALLOW_ORIGIN='^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$'
+```
+
+### **Frontend Configuration**
+Create environment files for the frontend:
+
+```env
+# Frontend/.env
+VITE_API_URL=http://localhost:8080/api
+```
+
+```env
+# Frontend/.env.development
+VITE_API_URL=http://localhost:8080/api
+```
 
 ## 🧪 **Testing**
 
@@ -130,7 +194,7 @@ php bin/phpunit
 To run the frontend tests, first access the frontend container, then use Vitest:
 ```bash
 ./dev.sh frontend
-pnpm test
+npm test
 ```
 
 ## 📝 **Contributing**

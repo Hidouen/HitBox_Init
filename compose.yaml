@@ -17,6 +17,12 @@ services:
     networks:
       - hitbox-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "nginx -t && pgrep nginx || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   backend:
     container_name: hitbox_backend
@@ -38,6 +44,11 @@ services:
     networks:
       - hitbox-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "php-fpm -t"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   frontend:
     container_name: hitbox_frontend
@@ -46,7 +57,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./Frontend:/app
-      - /app/node_modules
     environment:
       - NODE_ENV=${NODE_ENV}
     ports:
@@ -54,6 +64,12 @@ services:
     networks:
       - hitbox-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "ps aux | grep tail | grep -v grep || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   postgres:
     container_name: hitbox_postgres
@@ -71,6 +87,11 @@ services:
     networks:
       - hitbox-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 networks:
   hitbox-network:

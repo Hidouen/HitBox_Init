@@ -27,6 +27,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Configuration du répertoire de travail
 WORKDIR /var/www/html
 
+# Création de l'utilisateur non-root
+RUN useradd -G www-data,root -u 1000 -d /home/dev dev
+RUN mkdir -p /home/dev/.composer && \
+    chown -R dev:dev /home/dev
+
 # Création des répertoires de logs et configuration des permissions
 RUN mkdir -p /var/log/php && \
     chown -R dev:www-data /var/log/php && \
@@ -36,11 +41,6 @@ RUN mkdir -p /var/log/php && \
 COPY php.ini /usr/local/etc/php/conf.d/custom.ini
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-
-# Création de l'utilisateur non-root
-RUN useradd -G www-data,root -u 1000 -d /home/dev dev
-RUN mkdir -p /home/dev/.composer && \
-    chown -R dev:dev /home/dev
 
 # Changement vers l'utilisateur non-root
 USER dev 

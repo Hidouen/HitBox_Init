@@ -84,7 +84,7 @@ start() {
         
         # Vérifier l'état des conteneurs
         local all_healthy=true
-        for container in hitbox_postgres hitbox_backend hitbox_frontend hitbox_nginx; do
+        for container in hitbox_db hitbox_backend hitbox_frontend hitbox_nginx; do
             if ! docker ps -q -f name="$container" | grep -q .; then
                 print_error "Le conteneur $container n'a pas démarré"
                 all_healthy=false
@@ -140,8 +140,8 @@ frontend() {
 # Fonction pour accéder au shell de la base de données
 db() {
     print_message "Accès au shell de la base de données..."
-    if check_container "hitbox_postgres"; then
-        docker exec -it hitbox_postgres psql -U hitbox
+    if check_container "hitbox_db"; then
+        docker exec -it hitbox_db psql -U hitbox
     fi
 }
 
@@ -176,8 +176,8 @@ logs_frontend() {
 # Fonction pour afficher les logs de la base de données
 logs_db() {
     print_message "Affichage des logs de la base de données..."
-    if check_container "hitbox_postgres"; then
-        docker logs -f hitbox_postgres
+    if check_container "hitbox_db"; then
+        docker logs -f hitbox_db
     fi
 }
 

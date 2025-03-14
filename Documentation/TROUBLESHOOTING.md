@@ -88,7 +88,7 @@ Error: Connection refused
 **Solution:**
 1. Check PostgreSQL logs:
    ```bash
-   docker compose logs hitbox_postgres
+   docker compose logs hitbox_db
    ```
 2. Verify environment variables:
    ```bash
@@ -160,10 +160,10 @@ docker system prune -a
 ### Data Recovery
 ```bash
 # Backup database
-docker compose exec -T hitbox_postgres pg_dump -U hitbox > backup.sql
+docker compose exec -T hitbox_db pg_dump -U hitbox > backup.sql
 
 # Restore database
-cat backup.sql | docker compose exec -T hitbox_postgres psql -U hitbox
+cat backup.sql | docker compose exec -T hitbox_db psql -U hitbox
 ```
 
 ## 📞 Support Channels

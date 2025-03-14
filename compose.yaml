@@ -72,7 +72,7 @@ services:
       start_period: 10s
 
   postgres:
-    container_name: hitbox_postgres
+    container_name: hitbox_db
     image: postgres:17.4-alpine
     ports:
       - "${POSTGRES_PORT}:5432"
@@ -100,6 +100,6 @@ networks:
 
 volumes:
   postgres_data:
-    name: hitbox_postgres_data
+    name: hitbox_db_data
   postgres_backups:
-    name: hitbox_postgres_backups
+    name: hitbox_db_backups

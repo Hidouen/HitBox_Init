@@ -2,7 +2,7 @@
 
 HitBox is a web application designed for game enthusiasts to organize and share their game collections (playlists). With its integration of Symfony 7 and Vue.js 3, HitBox provides a smooth experience for managing your gaming library.
 
-## 📑 Table of Contents
+## 📑 Table of contents
 
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
@@ -30,11 +30,10 @@ HitBox is a web application designed for game enthusiasts to organize and share 
 ## 🛠️ Tech stack
 
 ### Backend
-- **Symfony 7.2**
+- **Symfony 7.3**
 - **PHP 8.4**
 - **PostgreSQL 17.4**
 - **PHP-FPM**
-- **Nginx**
 
 ### Frontend
 - **Vue.js 3**
@@ -42,13 +41,13 @@ HitBox is a web application designed for game enthusiasts to organize and share 
 - **TypeScript**
 - **Pinia** (state management)
 - **Vue Router**
-- **Vitest** (testing)
+- **Vitest**
 
 ### Development tools
-- **Docker & Docker Compose** (for containerization)
-- **npm** (package manager)
+- **Docker & Docker Compose**
+- **npm**
 - **Vite** (front build)
-- **Git** (version control)
+- **Git**
 
 ## 🚀 Getting started
 
@@ -60,66 +59,39 @@ Before you begin, make sure you have the following installed:
 ### Installation
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/Hidouen/HitBox_Init HitBox
-    cd HitBox
-    ```
+```bash
+git clone https://gitlab.com/ko-technique/ez_hitbox.git HitBox
+cd HitBox
+```
 
 2. Initialize the project by running the setup script:
-    ```bash
-    chmod +x dev.sh
-    ./dev.sh init
-    ```
+```bash
+chmod +x dev.sh
+./dev.sh init
+```
 
 3. Start the development containers:
-    ```bash
-    ./dev.sh start
-    ```
+```bash
+./dev.sh start
+```
 
-4. Initialize the Symfony backend project:
-    ```bash
-    # Access the backend container
-    ./dev.sh backend
+4. Install dependancies:
+```bash
+./dev.sh backend
+composer install
+exit
+./dev.sh frontend
+npm install
+exit
+```
 
-    # Create new Symfony project
-    composer create-project symfony/skeleton:"7.2.*" .
+5. Start front: 
+```bash
+./dev.sh frontend
+npm run dev -- --host --port 3000
+```
 
-    # Install additional packages as needed
-    composer require symfony/orm-pack
-    composer require --dev symfony/maker-bundle
-    composer require symfony/runtime
-    composer require symfony/apache-pack
-    composer require symfony/validator
-    composer require symfony/serializer
-    composer require symfony/security-bundle
-    composer require lexik/jwt-authentication-bundle
-    composer require nelmio/cors-bundle
-    composer require --dev symfony/test-pack
-
-    # Set proper permissions
-    chown -R www-data:www-data var
-    chmod -R 777 var
-
-    # Exit the container
-    exit
-    ```
-
-5. Initialize the Vue.js frontend project:
-    ```bash
-    # Access the frontend container
-    ./dev.sh frontend
-
-    # Create a new Vue project with recommended settings
-    npm create vue@latest .
-
-    # Install dependencies
-    npm install
-
-    # Start the development server
-    npm run dev -- --host --port 3000
-    ```
-
-5. Access the application locally:
+6. Access the application locally:
     - Frontend: [http://localhost:3000](http://localhost:3000)
     - Backend API: [http://localhost:8080/api](http://localhost:8080/api)
     - Nginx: [http://localhost:8080](http://localhost:8080) or [https://localhost:8443](https://localhost:8443)
@@ -129,13 +101,25 @@ Before you begin, make sure you have the following installed:
 The project includes a convenient script (`dev.sh`) with the following commands to help you during development:
 
 ```bash
-./dev.sh init     # Initialize the project setup
-./dev.sh start    # Start all containers (backend, frontend, postgres)
-./dev.sh stop     # Stop all containers
-./dev.sh logs     # View logs from running containers
-./dev.sh backend  # Access the backend container's shell
-./dev.sh frontend # Access the frontend container's shell
-./dev.sh db       # Access the PostgreSQL shell
+./dev.sh init           # Initialize the project setup
+./dev.sh start          # Start all containers (backend, frontend, postgres)
+./dev.sh stop           # Stop all containers
+./dev.sh restart        # Restart all containers
+./dev.sh status         # Check status of containers
+./dev.sh logs           # View logs from all running containers
+./dev.sh logs:backend   # View backend container logs
+./dev.sh logs:frontend  # View frontend container logs
+./dev.sh logs:db        # View database container logs
+./dev.sh logs:nginx     # View nginx container logs
+./dev.sh backend        # Access the backend container's shell
+./dev.sh frontend       # Access the frontend container's shell
+./dev.sh db             # Access the PostgreSQL shell
+./dev.sh migrate        # Run database migrations
+./dev.sh backup:db      # Create a backup of the database
+./dev.sh restore:db     # Restore database from backup
+./dev.sh clean          # Clean up unused containers and volumes
+./dev.sh test:backend   # Run backend tests
+./dev.sh test:frontend  # Run frontend tests
 ```
 
 ## 📁 Project structure
@@ -146,12 +130,13 @@ The project's directory structure is as follows:
 hitbox/
 ├── backend/           # Symfony backend application
 ├── frontend/          # Vue.js frontend application
-├── config/            # Configuration files for Docker
+├── docker/            # Docker configuration files
 │   ├── nginx/         # Nginx configuration
 │   ├── backend/       # Backend container configuration
 │   ├── frontend/      # Frontend container configuration
 │   └── postgres/      # PostgreSQL container configuration
 ├── database/          # Database-related files
+│   ├── backups/       # Database backup files
 │   └── scripts/       # SQL initialization scripts
 └── documentation/     # Project-related documentation
 ```
@@ -180,18 +165,52 @@ VITE_API_URL=http://localhost:8080/api
 ## 🧪 Testing
 
 ### Backend tests
-To run the backend tests, first access the backend container, then run PHPUnit:
+To run the backend tests:
+```bash
+./dev.sh test:backend
+```
+
+Or manually by accessing the backend container:
 ```bash
 ./dev.sh backend
 php bin/phpunit
 ```
 
 ### Frontend tests
-To run the frontend tests, first access the frontend container, then use Vitest:
+To run the frontend tests:
+```bash
+./dev.sh test:frontend
+```
+
+Or manually by accessing the frontend container:
 ```bash
 ./dev.sh frontend
 npm test
 ```
+
+## 📦 Database management
+
+### Migrations
+To run database migrations:
+```bash
+./dev.sh migrate
+```
+
+### Backup and Restore
+The project includes convenient commands to backup and restore your database:
+
+```bash
+# Create a database backup
+./dev.sh backup:db
+
+# Restore from the most recent backup
+./dev.sh restore:db
+
+# Restore from a specific backup
+./dev.sh restore:db backup_filename.sql
+```
+
+Backups are stored in the `database/backups/` directory.
 
 ## 📝 Contributing
 

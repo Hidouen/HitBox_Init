@@ -1,29 +1,4 @@
 services:
-  nginx:
-    container_name: hitbox_nginx
-    build:
-      context: ./config/nginx
-      dockerfile: Dockerfile
-    ports:
-      - "${NGINX_PORT_HTTP}:80"
-      - "${NGINX_PORT_HTTPS}:443"
-    volumes:
-      - ./config/nginx:/etc/nginx/conf.d
-    depends_on:
-      backend:
-        condition: service_healthy
-      frontend:
-        condition: service_healthy
-    networks:
-      - hitbox-network
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "nginx -t && pgrep nginx || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
-
   backend:
     container_name: hitbox_backend
     build:
